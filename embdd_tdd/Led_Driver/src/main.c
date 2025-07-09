@@ -1,7 +1,8 @@
-#ifndef LED_DRIVER_H
-#define LEDDRIVER_H
-
 /************************ Includes ************************/
+
+#include "unity_fixture.h"
+#include "LED_Driver.h"
+#include "run_all.h"
 
 /************************ Defines  ************************/
 
@@ -11,5 +12,10 @@
 
 /******************* Routine Prototypes *******************/
 
+/************************ Routines ************************/
 
-#endif
+
+int main(int argc, const char * argv[])
+{
+  return UnityMain(argc, argv, RunAllTests);
+}

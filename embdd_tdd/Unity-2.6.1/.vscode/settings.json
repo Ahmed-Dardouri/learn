@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "productioncode.h": "c",
+        "unity_fixture.h": "c",
+        "unity_memory.h": "c"
+    }
+}
