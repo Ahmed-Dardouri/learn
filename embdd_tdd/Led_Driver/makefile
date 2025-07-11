@@ -34,7 +34,9 @@ SRC_FILES1=\
   src/LED_Driver.c \
   src/Circular_Buffer.c \
   Unit_tests/LED_Driver_TEST.c \
+  Unit_tests/Circular_Buffer_TEST.c \
   Unit_tests/Test_Runners/LED_Driver_TEST_RUNNER.c \
+  Unit_tests/Test_Runners/Circular_Buffer_TEST_RUNNER.c \
   Unit_tests/Test_Runners/run_all.c \
   
 
