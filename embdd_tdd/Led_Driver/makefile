@@ -9,7 +9,7 @@ C_COMPILER=gcc
 UNITY_ROOT=Unity
 
 CFLAGS=-std=c99
-CFLAGS += -Wall
+#CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -Wpointer-arith
 CFLAGS += -Wcast-align
@@ -31,12 +31,14 @@ SRC_FILES1=\
   src/main.c \
   $(UNITY_ROOT)/src/unity.c \
   $(UNITY_ROOT)/extras/fixture/src/unity_fixture.c \
-  src/LED_Driver/LED_Driver.c \
+  src/LED_Driver.c \
+  src/Circular_Buffer.c \
   Unit_tests/LED_Driver_TEST.c \
   Unit_tests/Test_Runners/LED_Driver_TEST_RUNNER.c \
-  Unit_tests/Test_Runners/run_all.c
+  Unit_tests/Test_Runners/run_all.c \
+  
 
-INC_DIRS=-Isrc -Isrc/LED_Driver -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src -IUnit_tests/Test_Runners
+INC_DIRS=-Iinc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS
 
 all: clean default
