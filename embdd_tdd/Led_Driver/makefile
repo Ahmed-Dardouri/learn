@@ -38,9 +38,9 @@ SRC_FILES1=\
   Unit_tests/Test_Runners/LED_Driver_TEST_RUNNER.c \
   Unit_tests/Test_Runners/Circular_Buffer_TEST_RUNNER.c \
   Unit_tests/Test_Runners/run_all.c \
-  
+  Unit_tests/mocks/RuntimeErrorStub.c \
 
-INC_DIRS=-Iinc -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src
+INC_DIRS= -Iinc -Iinc/utils -I$(UNITY_ROOT)/src -I$(UNITY_ROOT)/extras/fixture/src -IUnit_tests/mocks
 SYMBOLS=-DUNITY_FIXTURE_NO_EXTRAS
 
 all: clean default
