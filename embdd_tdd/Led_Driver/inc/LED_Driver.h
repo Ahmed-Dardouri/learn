@@ -16,5 +16,6 @@
 void LED_Driver_Create(uint16_t * led_reg);
 void LED_Driver_TurnOn(uint8_t led_num);
 void LED_Driver_TurnOff(uint8_t led_num);
+void LED_Driver_TurnAllOn(void);
 
 #endif
