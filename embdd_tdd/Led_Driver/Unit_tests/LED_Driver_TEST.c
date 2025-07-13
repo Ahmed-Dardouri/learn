@@ -18,6 +18,7 @@ uint16_t virtualLeds = 0xFFFF;
 
 TEST_SETUP(LedDriver){
     virtualLeds = 0xFFFF;
+    RuntimeErrorStub_Reset();
     LED_Driver_Create(&virtualLeds);
 }
 
@@ -46,6 +47,13 @@ TEST(LedDriver, TurnOnMultipleLeds){
     TEST_ASSERT_EQUAL_HEX16(0x180, virtualLeds);
 }
 
+TEST(LedDriver, TurnOffMultipleLeds){
+    LED_Driver_TurnAllOn();
+    LED_Driver_TurnOff(9);
+    LED_Driver_TurnOff(8);
+    TEST_ASSERT_EQUAL_HEX16((~0x180)&0xffff, virtualLeds);
+}
+
 TEST(LedDriver, TurnOffAnyLed){
     LED_Driver_TurnAllOn();
     LED_Driver_TurnOff(9);
@@ -55,6 +63,12 @@ TEST(LedDriver, TurnOffAnyLed){
 TEST(LedDriver, TurnOnAll){
     LED_Driver_TurnAllOn();
     TEST_ASSERT_EQUAL_HEX16(0xFFFF, virtualLeds);
+}
+
+TEST(LedDriver, TurnOffAll){
+    LED_Driver_TurnAllOn();
+    LED_Driver_TurnAllOff();
+    TEST_ASSERT_EQUAL_HEX16(0,virtualLeds);
 }
 
 TEST(LedDriver, LedMemIsNotReadable){
@@ -86,6 +100,34 @@ TEST(LedDriver, OutOfBoundOffChangesNothing){
 }
 
 TEST(LedDriver, OutOfBoundOffProducesRuntimeError){
-    LED_Driver_TurnOff(-1);
+    LED_Driver_TurnOff(17);
     TEST_ASSERT_EQUAL_STRING("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+}
+
+TEST(LedDriver, OutOfBoundOnProducesRuntimeError){
+    LED_Driver_TurnOn(0);
+    TEST_ASSERT_EQUAL_STRING("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+}
+
+IGNORE_TEST(LedDriver, IgnoredToDo){
+    /* TODO: smg */
+}
+
+TEST(LedDriver, IsOn){
+    TEST_ASSERT_FALSE(LED_Driver_IsOn(10));
+    LED_Driver_TurnOn(10);
+    TEST_ASSERT_TRUE(LED_Driver_IsOn(10));
+}
+
+TEST(LedDriver, IsOff){
+    TEST_ASSERT_TRUE(LED_Driver_IsOff(5));
+    LED_Driver_TurnOn(5);
+    TEST_ASSERT_FALSE(LED_Driver_IsOff(5));
+}
+
+TEST(LedDriver, OutOfBoundLedsALwaysOff){
+    TEST_ASSERT_TRUE(LED_Driver_IsOff(0));
+    TEST_ASSERT_TRUE(LED_Driver_IsOff(17));
+    TEST_ASSERT_FALSE(LED_Driver_IsOn(0));
+    TEST_ASSERT_FALSE(LED_Driver_IsOn(17));
 }

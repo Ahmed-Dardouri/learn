@@ -4,7 +4,7 @@
 /************************ Includes ************************/
 
 /************************ Defines  ************************/
-
+#define RUNTIME_ERROR_DEFAULT_PARAM         -1
 #define RUNTUME_ERROR(description, parameter) \
     RuntimeError(description, parameter, __FILE__, __LINE__)
 
