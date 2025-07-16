@@ -17,7 +17,7 @@
 
 static uint16_t * leds_address;
 static uint16_t leds_image;
-
+static bool _inverted_logic = false;
 /******************* Routine Prototypes *******************/
 
 static uint16_t convertLedIndexToBitMask(uint8_t led_index);
@@ -28,11 +28,17 @@ static void clearLedImageBit(uint8_t led_num);
 
 /************************ Routines ************************/
 
-void LED_Driver_Create(uint16_t * led_reg){
+void LED_Driver_Create(uint16_t * led_reg, bool inverted_logic){
     leds_address = led_reg;
     leds_image = LEDS_ALL_OFF;
+    _inverted_logic = inverted_logic;
     update_hardware();
 }
+
+bool LED_Driver_GetInvertedLogic(void){
+    return _inverted_logic;
+}
+
 
 void LED_Driver_TurnOn(uint8_t led_num){
     if(isLedOutOfBound(led_num)){
@@ -78,7 +84,12 @@ static uint16_t convertLedIndexToBitMask(uint8_t led_index){
 }
 
 static void update_hardware(void){
-    *leds_address = leds_image;
+    if(_inverted_logic == true){
+        *leds_address = (uint16_t)~leds_image;    
+    }
+    else{
+        *leds_address = leds_image;
+    }
 }
 
 static bool isLedOutOfBound(uint8_t led_num){
